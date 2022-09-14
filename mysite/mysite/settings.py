@@ -57,7 +57,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [],
-        "APP_DIRS": True,
+        "APP_DIRS": True, # it looks for a `templates` subdirectory by convention
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
