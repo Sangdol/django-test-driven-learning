@@ -1,38 +1,29 @@
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.views import generic
 
 from .models import Question, Choice
 
 
-# Each view either returns an HttpResponse or raises an exception such as Http404.
-def index(request):
-    # What does the preceding dash mean?
-    latest_question_list = Question.objects.order_by("-pub_date")[:5]
-    context = {
-        'latest_question_list': latest_question_list,
-    }
+# How to add business logic into generic?
+# Generic view documentation: https://docs.djangoproject.com/en/4.1/topics/class-based-views/
+class IndexView(generic.ListView):
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_questoin_list'
 
-    return render(request, 'polls/index.html', context)
-
-
-def detail_old(request, question_id):
-    try:
-        question = Question.objects.get(pk=question_id)
-    except Question.DoesNotExist:
-        raise Http404("Question does not exist")
-    return render(request, 'polls/detail.html', {'question': question})
+    def get_queryset(self):
+        return Question.objects.order_by('-pub_date')[:5]
 
 
-# There's also `get_list_or_404()`
-def detail(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/detail.html', {'question': question})
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = 'polls/detail.html'
 
 
-def results(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/results.html', {'question': question})
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name: str = 'polls/results.html'
 
 
 def vote(request, question_id):
