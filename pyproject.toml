@@ -8,6 +8,7 @@ authors = ["Sanghyun Lee <hammerha@gmail.com>"]
 python = "^3.10"
 Django = "^4.1.1"
 django-stubs = {extras = ["compatible-mypy"], version = "^1.12.0"}
+django-ninja = "^0.19.1"
 
 [tool.poetry.dev-dependencies]
 
