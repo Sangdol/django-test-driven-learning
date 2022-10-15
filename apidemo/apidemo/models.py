@@ -13,7 +13,7 @@ class Employee(models.Model):
 class EmployeeIn(Schema):
     first_name: str
     last_name: str
-    birthdate: date = None
+    birthdate: date | None = None
 
 
 # Writing it is not required but there are benefits in writing it
@@ -24,4 +24,4 @@ class EmployeeOut(Schema):
     id: int
     first_name: str
     last_name: str
-    birthdate: date = None
+    birthdate: date | None = None
